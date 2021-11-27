@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            position: absolute;
+            left: 0;
+            top: 40px;
+            width: 200px;
+            height: 200px;
+            background: pink;
+        }
+    </style>
+</head>
+
+<body>
+    <button>按钮</button>
+    <div class="box"></div>
+    <script>
+        var btn = document.querySelector('button');
+        var box = document.querySelector('.box');
+
+        // btn.onclick = function() {
+        //     var timer = setInterval(function() {
+        //         box.style.left = box.offsetLeft + 5 + 'px';
+        //         if (box.offsetLeft >= 500) {
+        //             clearInterval(timer);
+        //         }
+        //     }, 30)
+        // }
+
+        //函数封装  
+        // function animate(obj, target, fn) {
+        //     obj.timer = setInterval(function() {
+        //         if (obj.offsetLeft >= target) {
+        //             clearInterval(obj.timer);
+        //             if (fn) {
+        //                 fn();
+        //             }
+        //         } else {
+        //             obj.style.left = obj.offsetLeft + 5 + 'px'; //数字+字符串，默认就是拼成字符串了
+        //         }
+        //     }, 30)
+        // }
+
+        // btn.onclick = function() {
+        //     animate(box, 200, function() {
+        //         alert('完成');
+        //     });
+        // }
+
+        //动画缓动
+        function animate(obj, target, fn) {
+            obj.timer = setInterval(function() {
+                var step = (target - obj.offsetLeft) / 10;
+                step = step > 0 ? Math.ceil(step) : Math.floor(step);
+                if (obj.offsetLeft >= target) {
+                    clearInterval(obj.timer);
+                    if (fn) {
+                        fn();
+                    }
+                } else {
+                    obj.style.left = obj.offsetLeft + step + 'px'; //数字+字符串，默认就是拼成字符串了
+                }
+            }, 30)
+        }
+
+        btn.onclick = function() {
+            animate(box, 200, function() {
+                alert('完成');
+            });
+        }
+    </script>
+</body>
+
+</html>
